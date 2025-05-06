@@ -3,7 +3,7 @@
 from homeassistant.const import Platform
 
 DOMAIN = "robonomics_media"
-PLATFORMS = [Platform.BUTTON, Platform.SENSOR]
+PLATFORMS = [Platform.SENSOR]
 
 CREATE_BACKUP_SERVICE = "save_backup_to_robonomics"
 RESTORE_BACKUP_SERVICE = "restore_from_robonomics_backup"

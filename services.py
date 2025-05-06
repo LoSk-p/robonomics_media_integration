@@ -159,5 +159,4 @@ async def send_media_folder_if_changed(hass: HomeAssistant) -> None:
     meta_ipfs_hash = await IPFSLocalUtils(hass).get_folder_or_file_hash(f"{IPFS_MEDIA_PATH}/{IPFS_MEDIA_META_FILE}")
     if meta_ipfs_hash != robonomics.last_datalog:
         _LOGGER.debug(f"Media meta file {IPFS_MEDIA_PATH}/{IPFS_MEDIA_META_FILE} has been changed, sending to IPFS")
-        await add_media_to_ipfs(hass, IPFS_MEDIA_PATH)
         await robonomics.send_datalog_with_queue(meta_ipfs_hash)

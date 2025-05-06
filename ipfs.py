@@ -84,12 +84,16 @@ async def wait_ipfs_daemon(hass: HomeAssistant, timeout: tp.Optional[int] = None
 
 
 async def add_media_to_ipfs(hass: HomeAssistant, filename: str) -> tp.Optional[str]:
+    _LOGGER.debug(f"Start add picture to IPFS {filename}")
     ipfs_media_hash, size = await _add_to_ipfs(
         hass, filename, IPFS_MEDIA_PATH, True, None, None
     )
     await hass.async_add_executor_job(_upload_to_crust, hass, ipfs_media_hash, size)
     meta_info = await read_ipfs_local_file(hass, IPFS_MEDIA_META_FILE, IPFS_MEDIA_PATH)
+    if meta_info is None:
+        meta_info = []
     meta_info.append({"filename": filename.split("/")[-1], "cid": ipfs_media_hash, "timestamp": datetime.now().timestamp()})
+    _LOGGER.debug(f"Meta info: {meta_info}")
     path_to_meta = await FileSystemUtils(hass).write_data_to_temp_file(json.dumps(meta_info), filename = IPFS_MEDIA_META_FILE)
     ipfs_meta_hash, _ = await _add_to_ipfs(
         hass, path_to_meta, IPFS_MEDIA_PATH, True, None, None

@@ -226,7 +226,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             target = {"device_id": call.data["device_id"]}
         path = call.data["path"]
         use_emoji = call.data.get("use_emoji", True)
-        await save_photo(hass, target, path, use_emoji, controller_account)
+        await save_photo(hass, target, path, use_emoji)
 
     hass.services.async_register(DOMAIN, SAVE_PHOTO_SERVICE, handle_save_photo)
 
