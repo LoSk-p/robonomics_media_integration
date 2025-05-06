@@ -1,0 +1,44 @@
+save_video_to_robonomics:
+  name: Save recording to robonomics
+  description: Record a video, save it to IPFS and Digital Twin
+  target:
+      entity:
+        domain: camera
+  fields:
+    path:
+      description: Home Assistant must have access to this folder
+      name: Path to save the recording
+      required: true
+      example: "/tmp"
+      selector:
+        text:
+    duration:
+      description: Duration of the recording in seconds (default 10s)
+      name: Duration
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 90
+
+save_photo_to_robonomics:
+  name: Save photo to robonomics
+  description: Make photo, save it to IPFS and Digital Twin
+  target:
+      entity:
+        domain: camera
+  fields:
+    path:
+      description: Home Assistant must have access to this folder
+      name: Path to save the photo
+      required: true
+      example: "/tmp"
+      selector:
+        text:
+    use_emoji:
+      description: Use emoji to hide faces
+      name: Use emoji
+      required: true
+      default: true
+      selector:
+        boolean:
