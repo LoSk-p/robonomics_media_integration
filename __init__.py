@@ -133,10 +133,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     _LOGGER.debug("Robonomics user control starting set up")
     conf = entry.data
-    if CONF_IPFS_GATEWAY in conf:
-        hass.data[DOMAIN][CONF_IPFS_GATEWAY] = conf[CONF_IPFS_GATEWAY]
-    hass.data[DOMAIN][CONF_IPFS_GATEWAY_AUTH] = conf[CONF_IPFS_GATEWAY_AUTH]
-    hass.data[DOMAIN][CONF_IPFS_GATEWAY_PORT] = conf[CONF_IPFS_GATEWAY_PORT]
     hass.data[DOMAIN][CONF_SENDING_TIMEOUT] = timedelta(
         minutes=conf[CONF_SENDING_TIMEOUT]
     )
