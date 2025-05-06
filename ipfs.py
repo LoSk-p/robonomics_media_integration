@@ -96,7 +96,7 @@ async def add_media_to_ipfs(hass: HomeAssistant, filename: str) -> tp.Optional[s
     _LOGGER.debug(f"Meta info: {meta_info}")
     path_to_meta = await FileSystemUtils(hass).write_data_to_temp_file(json.dumps(meta_info), filename = IPFS_MEDIA_META_FILE)
     ipfs_meta_hash, _ = await _add_to_ipfs(
-        hass, path_to_meta, IPFS_MEDIA_PATH, True, None, None
+        hass, path_to_meta, IPFS_MEDIA_PATH, False, None, IPFS_MEDIA_META_FILE
     )
     await FileSystemUtils(hass).delete_temp_file(path_to_meta)
 

@@ -30,7 +30,7 @@ class LocalGateway:
         """
         self.hass = hass
 
-    @catch_ipfs_errors_async("Exception in add to local node")
+    # @catch_ipfs_errors_async("Exception in add to local node")
     async def add(self, filename: str, path: str, pin: bool, last_file_name: str | None = None) -> tuple[str | None, int | None]:
         """Add a file to the IPFS local node.
 
