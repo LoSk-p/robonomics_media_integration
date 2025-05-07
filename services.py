@@ -121,6 +121,7 @@ async def save_photo(
     if os.path.isfile(f"{path}/{filename}"):
         #_LOGGER.debug(f"Start encrypt video {filename}")
         if use_emoji:
+            _LOGGER.debug(f"Start adding emoji to photo {filename}")
             input_photo = await FileSystemUtils(hass).read_file_data(f"{path}/{filename}", "rb")
             np_arr = np.frombuffer(input_photo, np.uint8)
             cv_image = cv2.imdecode(np_arr, cv2.IMREAD_UNCHANGED)
@@ -133,11 +134,13 @@ async def save_photo(
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
             faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
 
+            _LOGGER.debug(f"Found {len(faces)} faces in the image")
+
             # Накладываем смайлик на каждое лицо
             for (x, y, w, h) in faces:
                 emoji_num = random.randint(1, 17)
                 emoji_bin = await FileSystemUtils(hass).read_file_data(
-                    f"/home/homeassistant/.homeassistant/media/smiles/{emoji_num}.png", "rb")
+                    f"/home/ubuntu/.homeassistant/media/smiles/{emoji_num}.png", "rb")
                 emoji = Image.open(io.BytesIO(emoji_bin)).convert("RGBA")
                 resized_emoji = emoji.resize((w, h))
                 image.paste(resized_emoji, (x, y), resized_emoji)

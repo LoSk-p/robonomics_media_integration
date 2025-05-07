@@ -98,7 +98,10 @@ async def add_media_to_ipfs(hass: HomeAssistant, filename: str) -> tp.Optional[s
     ipfs_meta_hash, _ = await _add_to_ipfs(
         hass, path_to_meta, IPFS_MEDIA_PATH, False, None, IPFS_MEDIA_META_FILE
     )
-    await FileSystemUtils(hass).delete_temp_file(path_to_meta)
+    try:
+        await FileSystemUtils(hass).delete_temp_file(path_to_meta)
+    except Exception as e:
+        _LOGGER.debug(f"Error while deleting temp file {path_to_meta}: {e}")
 
     return ipfs_meta_hash
 
